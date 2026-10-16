@@ -1,0 +1,13 @@
+{
+  // Inherits useDefineForClassFields:false from the root config. Do not set it
+  // to true: the *.page.ts page objects use class-field initializers that
+  // reference `this.page` before the constructor parameter is declared
+  // (`readonly x = new Tester(this.page)`), which fails as TS2729 under the
+  // standard class-fields semantics.
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/e2e",
+    "types": ["node"]
+  },
+  "include": ["**/*.ts"]
+}

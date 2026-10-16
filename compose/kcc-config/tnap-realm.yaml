@@ -1,0 +1,1326 @@
+realm: tnap
+enabled: true
+displayName: "Telekom TNAP Portal"
+# Keycloak's 5-minute default access-token lifespan is shorter than a full parallel suite
+# run (~11 min), and the `setup` project mints ONE token that every spec then replays. A
+# spec starting after minute 5 would present an expired token, which is worse than none:
+# the app fetches permissions with it, gets 401, and every permission guard fails closed
+# to /statusPage — so the whole tail of the suite fails on "element(s) not found" rather
+# than on anything it was testing. Sized well past the suite runtime; this realm is local
+# test-only infrastructure and is never deployed.
+accessTokenLifespan: 3600
+ssoSessionIdleTimeout: 7200
+ssoSessionMaxLifespan: 7200
+attributes:
+  # configures the hostname that is used in the
+  # /realms/tnap/.well-known/openid-configuration
+  # endpoint
+  frontendUrl: "http://localhost:4200"
+# in app-config, the key is called 'initialUsers'
+# instead of 'users'
+users:
+  - username: test-admin
+    enabled: true
+    email: test-admin@tnap.com
+    firstName: test
+    lastName: admin
+    emailVerified: true
+    credentials:
+      - type: password
+        secretData: "{\"value\":\"nD4K4x8HEgk6xlWIAgzZOE+EOjdbovJfEa7N3WXwIMCWCfdXpn7Riys7hZhI1NbKcc9QPI9j8LQB/JSuZVcXKA==\",\"salt\":\"T8X9A9tT2cyLvEjHFo+zuQ==\",\"additionalParameters\":{}}"
+        credentialData: "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    attributes:
+      sdc_user:
+        - "cs0008"
+    realmRoles:
+      - default-roles-tnap
+      - portal_admin
+      - portal_designer
+      - portal_operator
+  - username: "tnap-designer"
+    enabled: true
+    emailVerified: false
+    firstName: "FirstName4tnap-designer"
+    lastName: "LastName4tnap-designer"
+    email: "tnap-designer@example.xyz"
+    credentials:
+      - type: password
+        secretData: "{\"value\":\"nD4K4x8HEgk6xlWIAgzZOE+EOjdbovJfEa7N3WXwIMCWCfdXpn7Riys7hZhI1NbKcc9QPI9j8LQB/JSuZVcXKA==\",\"salt\":\"T8X9A9tT2cyLvEjHFo+zuQ==\",\"additionalParameters\":{}}"
+        credentialData: "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    attributes:
+      sdc_user:
+        - "cs0008"
+    realmRoles:
+      - default-roles-tnap
+      - portal_designer
+    groups: []
+  - username: "tnap-operator"
+    enabled: true
+    emailVerified: false
+    firstName: "FirstName4tnap-operator"
+    lastName: "LastName4tnap-operator"
+    email: "tnap-operator@example.xyz"
+    credentials:
+      - type: password
+        secretData: "{\"value\":\"nD4K4x8HEgk6xlWIAgzZOE+EOjdbovJfEa7N3WXwIMCWCfdXpn7Riys7hZhI1NbKcc9QPI9j8LQB/JSuZVcXKA==\",\"salt\":\"T8X9A9tT2cyLvEjHFo+zuQ==\",\"additionalParameters\":{}}"
+        credentialData: "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    attributes:
+      sdc_user:
+        - "cs0008"
+    realmRoles:
+      - default-roles-tnap
+      - portal_operator
+    groups: []
+  - username: "e2e-admin"
+    enabled: true
+    emailVerified: false
+    firstName: "FirstName4e2e-admin"
+    lastName: "LastName4tnap4e2e-admin"
+    email: "e2e-admin@example.xyz"
+    credentials:
+      - type: password
+        secretData: "{\"value\":\"nD4K4x8HEgk6xlWIAgzZOE+EOjdbovJfEa7N3WXwIMCWCfdXpn7Riys7hZhI1NbKcc9QPI9j8LQB/JSuZVcXKA==\",\"salt\":\"T8X9A9tT2cyLvEjHFo+zuQ==\",\"additionalParameters\":{}}"
+        credentialData: "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    attributes:
+      sdc_user:
+        - "cs0008"
+    realmRoles:
+      - default-roles-tnap
+      - portal_operator
+    groups: []
+  - username: "e2e-designer"
+    enabled: true
+    emailVerified: false
+    firstName: "FirstName4e2e-designer"
+    lastName: "LastName4tnap4e2e-designer"
+    email: "e2e-designer@example.xyz"
+    credentials:
+      - type: password
+        secretData: "{\"value\":\"nD4K4x8HEgk6xlWIAgzZOE+EOjdbovJfEa7N3WXwIMCWCfdXpn7Riys7hZhI1NbKcc9QPI9j8LQB/JSuZVcXKA==\",\"salt\":\"T8X9A9tT2cyLvEjHFo+zuQ==\",\"additionalParameters\":{}}"
+        credentialData: "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    attributes:
+      sdc_user:
+        - "cs0008"
+    realmRoles:
+      - default-roles-tnap
+      - portal_operator
+    groups: []
+  - username: "e2e-operator"
+    enabled: true
+    emailVerified: false
+    firstName: "FirstName4e2e-operator"
+    lastName: "LastName4tnap4e2e-operator"
+    email: "e2e-operator@example.xyz"
+    credentials:
+      - type: password
+        secretData: "{\"value\":\"nD4K4x8HEgk6xlWIAgzZOE+EOjdbovJfEa7N3WXwIMCWCfdXpn7Riys7hZhI1NbKcc9QPI9j8LQB/JSuZVcXKA==\",\"salt\":\"T8X9A9tT2cyLvEjHFo+zuQ==\",\"additionalParameters\":{}}"
+        credentialData: "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    attributes:
+      sdc_user:
+        - "cs0008"
+    realmRoles:
+      - default-roles-tnap
+      - portal_operator
+    groups: []
+  # The only user with mvp_operator, so it is the only one that sees the RAT treeview.
+  # Keeping it off every other user is what lets the node-view suites keep passing:
+  # treeview.component.html gates the two tree modes on an exclusive @if.
+  - username: "mvp-operator"
+    enabled: true
+    emailVerified: false
+    firstName: "FirstName4mvp-operator"
+    lastName: "LastName4tnap4mvp-operator"
+    email: "mvp-operator@example.xyz"
+    credentials:
+      - type: password
+        secretData: "{\"value\":\"nD4K4x8HEgk6xlWIAgzZOE+EOjdbovJfEa7N3WXwIMCWCfdXpn7Riys7hZhI1NbKcc9QPI9j8LQB/JSuZVcXKA==\",\"salt\":\"T8X9A9tT2cyLvEjHFo+zuQ==\",\"additionalParameters\":{}}"
+        credentialData: "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    attributes:
+      sdc_user:
+        - "cs0008"
+    realmRoles:
+      - default-roles-tnap
+      - portal_operator
+      - mvp_operator
+    groups: []
+  - username: "service-account-portal-bff"
+    emailVerified: false
+    credentials: []
+    realmRoles:
+      - default-roles-tnap
+    clientRoles:
+      realm-management:
+        - manage-realm
+        - manage-users
+    groups: []
+clients:
+  - clientId: portal-app
+    redirectUris:
+      - http://localhost:4200/*
+    attributes:
+      "post.logout.redirect.uris": "http://localhost:4200/*"
+    webOrigins:
+      - "*"
+    publicClient: "true"
+    frontchannelLogout: "false"
+    protocolMappers:
+      - name: "User-Roles"
+        protocol: openid-connect
+        protocolMapper: "oidc-usermodel-realm-role-mapper"
+        config:
+          userinfo.token.claim: "true"
+          id.token.claim: "true"
+          access.token.claim: "true"
+          claim.name: "roles"
+          multivalued: "true"
+      - name: "SDC-User"
+        protocol: openid-connect
+        protocolMapper: "oidc-usermodel-attribute-mapper"
+        config:
+          userinfo.token.claim: "true"
+          user.attribute: "sdc_user"
+          id.token.claim: "true"
+          access.token.claim: "true"
+          claim.name: "sdc_user"
+          jsonType.label: "String"
+  - clientId: portal-bff
+    secret: 5933482a-9f4c-44e0-9814-dca17e0a9137
+    standardFlowEnabled: "false"
+    directAccessGrantsEnabled: "false"
+    serviceAccountsEnabled: "true"
+    attributes:
+      frontchannel.logout.session.required: "false"
+    protocolMappers:
+      - name: "Client IP Address"
+        protocol: openid-connect
+        protocolMapper: "oidc-usersessionmodel-note-mapper"
+        config:
+          user.session.note: "clientAddress"
+          id.token.claim: "true"
+          access.token.claim: "true"
+          claim.name: "clientAddress"
+          jsonType.label: "String"
+      - name: "Client Host"
+        protocol: openid-connect
+        protocolMapper: "oidc-usersessionmodel-note-mapper"
+        config:
+          user.session.note: "clientHost"
+          id.token.claim: "true"
+          access.token.claim: "true"
+          claim.name: "clientHost"
+          jsonType.label: "String"
+      - name: "Client ID"
+        protocol: openid-connect
+        protocolMapper: "oidc-usersessionmodel-note-mapper"
+        config:
+          user.session.note: "client_id"
+          id.token.claim: "true"
+          access.token.claim: "true"
+          claim.name: "client_id"
+          jsonType.label: "String"
+    authorizationServicesEnabled: 'true'
+    authorizationSettings:
+      allowRemoteResourceManagement: 'true'
+      policyEnforcementMode: ENFORCING
+      decisionStrategy: UNANIMOUS
+      resources:
+        - name: default_resource
+          type: urn:portal-bff:resources:default
+          ownerManagedAccess: false
+          attributes: {}
+        - name: cm_action_resource
+          ownerManagedAccess: false
+          displayName: cm_action_resource
+          attributes: {}
+          uris:
+            - /cm-action
+            - /cm-action/approval/*
+          scopes:
+            - name: GET
+            - name: POST
+            - name: PUT
+        - name: pnfs_discrepancies_resource
+          ownerManagedAccess: false
+          displayName: pnfs_discrepancies_resource
+          attributes: {}
+          uris:
+            - /pnfs/*/discrepancy
+          scopes:
+            - name: GET
+        # Distinct from pnfs_discrepancies_resource above: that one backs the per-node
+        # discrepancy tab in the treeview, this one the standalone Discrepancy List page.
+        - name: cm_action_discrepancy_resource
+          ownerManagedAccess: false
+          displayName: cm_action_discrepancy_resource
+          attributes: {}
+          uris:
+            - /cm-action/discrepancy
+          scopes:
+            - name: GET
+        - name: config_data_resource
+          ownerManagedAccess: false
+          displayName: config_data_resource
+          attributes: {}
+          uris:
+            - /configdata/*
+          scopes:
+            - name: GET
+        - name: ui_log_resource
+          ownerManagedAccess: false
+          displayName: ui_log_resource
+          attributes: {}
+          uris:
+            - /log
+          scopes:
+            - name: POST
+        - name: service_logs_resource
+          ownerManagedAccess: false
+          displayName: service_logs_resource
+          attributes: {}
+          uris:
+            - /logs/*
+          scopes:
+            - name: GET
+        - name: network_slice_resource
+          ownerManagedAccess: false
+          displayName: network_slice_resource
+          attributes: {}
+          uris:
+            - /network/slices/*
+          scopes:
+            - name: GET
+        - name: network_feasiblity_resource
+          ownerManagedAccess: false
+          displayName: network_feasiblity_resource
+          attributes: {}
+          uris:
+            - /network/feasibility-jobs/*
+          scopes:
+            - name: GET
+        - name: policies_resource
+          ownerManagedAccess: false
+          displayName: policies_resource
+          attributes: {}
+          uris:
+            - /policies/*
+          scopes:
+            - name: GET
+            - name: POST
+            - name: PUT
+        - name: policy_drafts_resource
+          ownerManagedAccess: false
+          displayName: policy_drafts_resource
+          attributes: {}
+          uris:
+            - /policy-drafts/*
+          scopes:
+            - name: DELETE
+            - name: GET
+            - name: POST
+        - name: policy_drafts_url_resource
+          ownerManagedAccess: false
+          displayName: policy_drafts_url_resource
+          attributes: {}
+          uris:
+            - /policy-drafts-url
+          scopes:
+            - name: GET
+        - name: policy_status_resource
+          ownerManagedAccess: false
+          displayName: policy_status_resource
+          attributes: {}
+          uris:
+            - /policy-status
+          scopes:
+            - name: GET
+        - name: ran_template_drafts_resource
+          ownerManagedAccess: false
+          displayName: ran_template_drafts_resource
+          attributes: {}
+          uris:
+            - /ran-template-drafts/*
+          scopes:
+            - name: GET
+            - name: POST
+            - name: DELETE
+        - name: ran_template_drafts_url_resource
+          ownerManagedAccess: false
+          displayName: ran_template_drafts_url_resource
+          attributes: {}
+          uris:
+            - /ran-template-drafts-url
+          scopes:
+            - name: GET
+        - name: ran_templates_resource
+          ownerManagedAccess: false
+          displayName: ran_templates_resource
+          attributes: {}
+          uris:
+            - /ran-templates/*
+          scopes:
+            - name: GET
+            - name: POST
+            - name: PUT
+        - name: ran_template_manager_resource
+          ownerManagedAccess: false
+          displayName: ran_template_manager_resource
+          attributes: {}
+          uris:
+            - /ran-template-manager
+          scopes:
+            - name: GET
+        - name: ran_templates_ui_resource
+          ownerManagedAccess: false
+          displayName: ran_templates_ui_resource
+          attributes: {}
+          uris:
+            - /ui/ran-templates
+          scopes:
+            - name: GET
+        - name: ran_template_manager_ui_resource
+          ownerManagedAccess: false
+          displayName: ran_template_manager_ui_resource
+          attributes: {}
+          uris:
+            - /ui/ran-template-manager
+          scopes:
+            - name: GET
+        - name: ran_reconcile_resource
+          ownerManagedAccess: false
+          displayName: ran_reconcile_resource
+          attributes: {}
+          uris:
+            - /reconcile
+          scopes:
+            - name: POST
+        - name: ran_import_manager_resource
+          ownerManagedAccess: false
+          displayName: ran_import_manager_resource
+          attributes: {}
+          uris:
+            - /ran-import-manager/*
+            - /default-admin-configuration-draft
+          scopes:
+            - name: GET
+            - name: POST
+        - name: sae_configuration_resource
+          ownerManagedAccess: false
+          displayName: sae_configuration_resource
+          attributes: {}
+          uris:
+            - /admin-configurations/*
+            - /default-admin-configuration-draft
+          scopes:
+            - name: GET
+            - name: PUT
+        - name: slice_reconciliation_resource
+          ownerManagedAccess: false
+          displayName: slice_reconciliation_resource
+          attributes: {}
+          uris:
+            - /slice-reconciliation/config
+          scopes:
+            - name: GET
+            - name: PUT
+        - name: slice_template_drafts_resource
+          ownerManagedAccess: false
+          displayName: slice_template_drafts_resource
+          attributes: {}
+          uris:
+            - /slice-template-drafts/*
+          scopes:
+            - name: DELETE
+            - name: GET
+            - name: POST
+        - name: slice_template_drafts_url_resource
+          ownerManagedAccess: false
+          displayName: slice_template_drafts_url_resource
+          attributes: {}
+          uris:
+            - /slice-template-drafts-url
+          scopes:
+            - name: GET
+        - name: slice_template_schema_resource
+          ownerManagedAccess: false
+          displayName: slice_template_schema_resource
+          attributes: {}
+          uris:
+            - /slice-template-schema
+          scopes:
+            - name: GET
+        - name: slice_template_resource
+          ownerManagedAccess: false
+          displayName: slice_template_resource
+          attributes: {}
+          uris:
+            - /slice-templates/*
+          scopes:
+            - name: DELETE
+            - name: GET
+            - name: POST
+            - name: PUT
+        - name: slice_orders_resource
+          ownerManagedAccess: false
+          displayName: slice_orders_resource
+          attributes: {}
+          uris:
+            - /sliceOrders
+          scopes:
+            - name: GET
+        - name: slices_resource
+          ownerManagedAccess: false
+          displayName: slices_resource
+          attributes: {}
+          uris:
+            - /slices/*
+          scopes:
+            - name: DELETE
+            - name: POST
+        - name: topology_resource
+          ownerManagedAccess: false
+          displayName: topology_resource
+          attributes: {}
+          uris:
+            - /topologies
+          scopes:
+            - name: GET
+        - name: treeview_resource
+          ownerManagedAccess: false
+          displayName: treeview_resource
+          attributes: {}
+          uris:
+            - /treeview
+          scopes:
+            - name: GET
+        - name: rat_view_resource
+          ownerManagedAccess: false
+          displayName: rat_view_resource
+          attributes: {}
+          uris:
+            - /ran-treeview
+          scopes:
+            - name: GET
+        - name: preferences_resource
+          ownerManagedAccess: false
+          displayName: preferences_resource
+          attributes: {}
+          uris:
+            - /preferences
+          scopes:
+            - name: GET
+            - name: POST
+            - name: PUT
+        - name: ran_filter_resource
+          ownerManagedAccess: false
+          displayName: ran_filter_resource
+          attributes: {}
+          uris:
+            - /ran-filters
+          scopes:
+            - name: GET
+            - name: POST
+            - name: PUT
+            - name: DELETE
+        - name: s3_storage_browser_resource
+          ownerManagedAccess: false
+          displayName: s3_storage_browser_resource
+          attributes: {}
+          uris:
+            - /s3
+          scopes:
+            - name: GET
+        - name: software_mgmt_packages_resource
+          ownerManagedAccess: false
+          displayName: software_mgmt_packages_resource
+          attributes: {}
+          uris:
+            - /softwaremanagement/packages
+          scopes:
+            - name: GET
+            - name: POST
+            - name: DELETE
+        - name: app_starter_resource
+          ownerManagedAccess: false
+          displayName: app_starter_resource
+          attributes: {}
+          uris:
+            - /app-starter
+          scopes:
+            - name: GET
+        - name: users_resource
+          ownerManagedAccess: false
+          displayName: users_resource
+          attributes: {}
+          uris:
+            - /users/*
+          scopes:
+            - name: GET
+            - name: POST
+            - name: PUT
+            - name: DELETE
+        - name: cell_sites_resource
+          ownerManagedAccess: false
+          displayName: cell_sites_resource
+          attributes: {}
+          uris:
+            - /cell-sites/*
+          scopes:
+            - name: GET
+        # UI-only resource: gates the site filter group of the cell site map. It has
+        # no backend endpoint, the uri only has to stay unique within the realm.
+        - name: map_cell_sites_filter_ui_resource
+          ownerManagedAccess: false
+          displayName: map_cell_sites_filter_ui_resource
+          attributes: {}
+          uris:
+            - /ui/map-cell-sites-filter/*
+          scopes:
+            - name: GET
+        - name: service_design_creation_resource
+          ownerManagedAccess: false
+          displayName: service_design_creation_resource
+          attributes: {}
+          uris:
+            - /service-design-and-creation/*
+          scopes:
+            - name: GET
+            - name: POST
+            - name: PUT
+            - name: DELETE
+        - name: cm_action_search_resource
+          ownerManagedAccess: false
+          displayName: cm_action_search
+          attributes: {}
+          uris:
+            - /cm-action/search
+          scopes:
+            - name: GET
+        - name: cm_action_cancel_resource
+          ownerManagedAccess: false
+          displayName: cm_action_cancel_resource
+          attributes: {}
+          uris:
+            - /cm-action/cancel/bulk
+          scopes:
+            - name: PUT
+        - name: cm_action_export_resource
+          ownerManagedAccess: false
+          displayName: cm_action_export_resource
+          attributes: {}
+          uris:
+            - /cm-action/download
+          scopes:
+            - name: GET
+        # UI-only resources: gate individual columns in the cells list pane.
+        # No backend endpoint; URIs only need to be unique within the realm.
+        - name: cell_site_column_ui_resource
+          ownerManagedAccess: false
+          displayName: cell_site_column_ui_resource
+          attributes: {}
+          uris:
+            - /ui/cell-site-column/*
+          scopes:
+            - name: GET
+        - name: cell_azimuth_column_ui_resource
+          ownerManagedAccess: false
+          displayName: cell_azimuth_column_ui_resource
+          attributes: {}
+          uris:
+            - /ui/cell-azimuth-column/*
+          scopes:
+            - name: GET
+        - name: cell_map_column_ui_resource
+          ownerManagedAccess: false
+          displayName: cell_map_column_ui_resource
+          attributes: {}
+          uris:
+            - /ui/cell-map-column/*
+          scopes:
+            - name: GET
+      policies:
+        - name: ran_operator
+          description: ran_operator
+          type: role
+          logic: POSITIVE
+          config:
+            roles: "[{\"id\": \"portal_operator\", \"required\": true}]"
+        - name: mvp_operator
+          description: mvp_operator
+          type: role
+          logic: POSITIVE
+          config:
+            roles: "[{\"id\": \"mvp_operator\", \"required\": true}]"
+        - name: ran_admin
+          description: ran_admin
+          type: role
+          logic: POSITIVE
+          config:
+            roles: "[{\"id\": \"portal_admin\", \"required\": true}]"
+        - name: ran_viewer
+          description: ran_viewer
+          type: role
+          logic: POSITIVE
+          config:
+            roles: "[{\"id\": \"portal_operator\", \"required\": false}, {\"id\": \"ran_viewer\", \"required\": false}]"
+      # permissions:
+        - name: view_cm_action
+          description: view_cm_action
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cm_action_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: create_cm_action
+          description: create_cm_action
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cm_action_resource\"]"
+            scopes: "[\"POST\", \"PUT\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        # The cluster realms gate this on the `mvp_operator` role, which this e2e
+        # realm does not define; `ran_viewer` is the equivalent view-only policy here.
+        - name: view_pnfs_discrepancy
+          description: view_pnfs_discrepancy
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"pnfs_discrepancies_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        # `ran_viewer`, not `mvp_operator` as its treeview sibling above: the Discrepancy
+        # List page has to be reachable by the `local` (test-admin) identity, and
+        # test-admin holds no mvp_operator role.
+        - name: view_cm_action_discrepancy
+          description: view_cm_action_discrepancy
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cm_action_discrepancy_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_configdata
+          description: view_configdata
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"config_data_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: update_configdata
+          description: update_configdata
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"config_data_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: view_service_logs
+          description: view_service_logs
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"service_logs_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_network_slices
+          description: view_network_slices
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"network_slice_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_cell_sites
+          description: view_cell_sites
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cell_sites_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_map_cell_sites_filter
+          description: view_map_cell_sites_filter
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"map_cell_sites_filter_ui_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_cell_site_column
+          description: view_cell_site_column
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cell_site_column_ui_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_cell_azimuth_column
+          description: view_cell_azimuth_column
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cell_azimuth_column_ui_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_cell_map_column
+          description: view_cell_map_column
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cell_map_column_ui_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_service_design_creation
+          description: view_service_design_creation
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"service_design_creation_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: edit_service_design_creation
+          description: edit_service_design_creation
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"service_design_creation_resource\"]"
+            scopes: "[\"POST\", \"PUT\", \"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_network_feasiblity_jobs
+          description: view_network_feasiblity_jobs
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"network_feasiblity_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_policies
+          description: view_policies
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policies_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: create_policies
+          description: create_policies
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policies_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: update_policies
+          description: update_policies
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policies_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: delete_policy_drafts
+          description: delete_policy_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policy_drafts_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_policy_drafts
+          description: view_policy_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policy_drafts_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: deploy_policy_drafts
+          description: deploy_policy_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policy_drafts_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_policy_drafts_url
+          description: view_policy_drafts_url
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policy_drafts_url_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_policy_status
+          description: view_policy_status
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"policy_status_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: delete_ran_template_drafts
+          description: delete_ran_template_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_template_drafts_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_ran_template_drafts
+          description: view_ran_template_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_template_drafts_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: create_ran_template_drafts
+          description: create_ran_template_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_template_drafts_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_ran_template_drafts_url
+          description: view_ran_template_drafts_url
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_template_drafts_url_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_ran_templates
+          description: view_ran_templates
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_templates_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_ran_template_manager
+          description: view_ran_template_manager
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_template_manager_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_admin\"]"
+        - name: view_ran_templates_ui
+          description: view_ran_templates_ui
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_templates_ui_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_admin\"]"
+        - name: view_ran_template_manager_ui
+          description: view_ran_template_manager_ui
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_template_manager_ui_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_admin\"]"
+        - name: create_ran_template
+          description: create_ran_template
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_templates_resource\"]"
+            scopes: "[\"POST\", \"PUT\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: create_ran_reconcile
+          description: create_ran_reconcile
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_reconcile_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_ran_import_manager
+          description: view_ran_import_manager
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_import_manager_resource\"]"
+            scopes: "[\"GET\", \"POST\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: view_slice_reconciliation
+          description: view_slice_reconciliation
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_reconciliation_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: update_slice_reconciliation
+          description: update_slice_reconciliation
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_reconciliation_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: delete_slice_template_drafts
+          description: delete_slice_template_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_drafts_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_slice_template_drafts
+          description: view_slice_template_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_drafts_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: create_slice_template_drafts
+          description: create_slice_template_drafts
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_drafts_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_slice_template_drafts_url
+          description: view_slice_template_drafts_url
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_drafts_url_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_slice_template_schema
+          description: view_slice_template_schema
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_schema_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: delete_slice_templates
+          description: delete_slice_templates
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_slice_templates
+          description: view_slice_templates
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: create_slice_templates
+          description: create_slice_templates
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: update_slice_templates
+          description: update_slice_templates
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_template_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_slice_orders
+          description: view_slice_orders
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slice_orders_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: delete_slices
+          description: delete_slices
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slices_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: update_slices
+          description: update_slices
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"slices_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_topologies
+          description: view_topologies
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"topology_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_treeview
+          description: view_treeview
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"treeview_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_rat_view
+          description: view_rat_view
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"rat_view_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: view_preferences
+          description: view_preferences
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"preferences_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: create_preferences
+          description: create_preferences
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"preferences_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: update_preferences
+          description: update_preferences
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"preferences_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_sae_configuration
+          description: view_sae_configuration
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"sae_configuration_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: update_sae_configuration
+          description: update_sae_configuration
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"sae_configuration_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: create_ui_logs
+          description: create_ui_logs
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ui_log_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_viewer\"]"
+        - name: view_software_package
+          description: view_software_package
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"software_mgmt_packages_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: create_software_package
+          description: create_software_package
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"software_mgmt_packages_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: delete_software_package
+          description: delete_software_package
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"software_mgmt_packages_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_app_starter
+          description: view_app_starter
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"app_starter_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_users
+          description: view_users
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"users_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"ran_admin\"]"
+        - name: delete_users
+          description: delete_users
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"users_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_admin\"]"
+        - name: create_user
+          description: create_user
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"users_resource\"]"
+            scopes: "[\"POST\", \"PUT\"]"
+            applyPolicies: "[\"ran_admin\"]"
+        - name: view_ran_filters
+          description: view_ran_filters
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_filter_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: create_ran_filters
+          description: create_ran_filters
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_filter_resource\"]"
+            scopes: "[\"POST\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: update_ran_filters
+          description: update_ran_filters
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_filter_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: delete_ran_filters
+          description: delete_ran_filters
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"ran_filter_resource\"]"
+            scopes: "[\"DELETE\"]"
+            applyPolicies: "[\"ran_operator\"]"
+        - name: view_s3_storage_browser
+          description: view_s3_storage_browser
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"s3_storage_browser_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: view_cm_action_search
+          description: view_cm_action_search
+          type: scope
+          decisionStrategy: UNANIMOUS
+          config:
+            resources: "[\"cm_action_search_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: view_cm_action_cancel
+          description: view_cm_action_cancel
+          type: scope
+          decisionStrategy: AFFIRMATIVE
+          config:
+            resources: "[\"cm_action_cancel_resource\"]"
+            scopes: "[\"PUT\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+        - name: view_cm_action_export
+          description: view_cm_action_export
+          type: scope
+          decisionStrategy: AFFIRMATIVE
+          config:
+            resources: "[\"cm_action_export_resource\"]"
+            scopes: "[\"GET\"]"
+            applyPolicies: "[\"mvp_operator\"]"
+      scopes:
+        - name: GET
+        - name: POST
+        - name: PUT
+        - name: DELETE
+  # - name: portal_e2e
+  #   clientId: "portal-e2e"
+  #   secret: 21fabe63-6e28-459b-8a61-a31488400fef
+  #   standardFlowEnabled: "false"
+  #   protocolMappers:
+  #     - name: "Client IP Address"
+  #       protocolMapper: "oidc-usersessionmodel-note-mapper"
+  #       config:
+  #         user.session.note: "clientAddress"
+  #         id.token.claim: "true"
+  #         access.token.claim: "true"
+  #         claim.name: "clientAddress"
+  #         jsonType.label: "String"
+  #     - name: "SDC-User"
+  #       protocolMapper: "oidc-usermodel-attribute-mapper"
+  #       config:
+  #         userinfo.token.claim: "true"
+  #         user.attribute: "sdc_user"
+  #         id.token.claim: "true"
+  #         access.token.claim: "true"
+  #         claim.name: "sdc_user"
+  #         jsonType.label: "String"
+  #     - name: "User-Roles"
+  #       protocolMapper: "oidc-usermodel-realm-role-mapper"
+  #       config:
+  #         userinfo.token.claim: "true"
+  #         id.token.claim: "true"
+  #         access.token.claim: "true"
+  #         claim.name: "roles"
+  #         multivalued: "true"
+  #     - name: "Client ID"
+  #       protocolMapper: "oidc-usersessionmodel-note-mapper"
+  #       config:
+  #         user.session.note: "clientId"
+  #         id.token.claim: "true"
+  #         access.token.claim: "true"
+  #         claim.name: "clientId"
+  #         jsonType.label: "String"
+  #     - name: "Client Host"
+  #       protocolMapper: "oidc-usersessionmodel-note-mapper"
+  #       config:
+  #         user.session.note: "clientHost"
+  #         multivalued: "false"
+  #         id.token.claim: "true"
+  #         access.token.claim: "true"
+  #         claim.name: "clientHost"
+  #         jsonType.label: "String"
+  #   defaultClientScopes:
+  #     - "web-origins"
+  #     - "basic"
+  #     - "role_list"
+  #     - "profile"
+  #     - "acr"
+  #     - "email"
+  #     - "roles"
+roles:
+  realm:
+    - name: portal_admin
+      description: "User role for administration tasks in the portal."
+    - name: portal_designer
+      description: "User role for designer tasks in the portal."
+    - name: portal_operator
+      description: "User role for operator tasks in the portal."
+    - name: mvp_operator
+      description: "User role for MVP features toggle in the portal."
+    - name: ran_viewer
+      description: "User role only with view permissions for RAN"

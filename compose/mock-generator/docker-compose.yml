@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  mock-generator:
+    image: artifactory.devops.telekom.de/tnap-docker/mock-generator:latest
+    container_name: mock-generator
+    volumes:
+      - ../../wiremock/input:/app/input   # Links the local folder ./input to the container
+      - ../../wiremock/mappings:/app/output # Links the local folder ./output to the container
+    stdin_open: true
+    tty: true
